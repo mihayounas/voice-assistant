@@ -1,0 +1,59 @@
+{
+
+    "intents":[
+        {
+            "tag":"greeting",
+            "patterns": [
+                "Hi",
+                "Hey",
+                "What's up?",
+                "Hey how are you?"
+            ],
+            "responses":[
+                "Hey!",
+                "What Can I do for you?",
+                "How can I help you?",
+                "Ready to help"
+
+            ]
+        },
+        {
+            "tag":"python",
+            "patterns": [
+                "What is Python",
+                "tell me about python",
+                "fun fact about python"
+            ],
+            "responses":[
+                "Python is a high-level, interpreted programming language that emphasizes code readability and simplicity. It was created by Guido van Rossum in 1991 and has become one of the most popular programming languages in the world due to its versatility and ease of use. Python can be used for a wide range of applications, including web development, data analysis, artificial intelligence, scientific computing, and more. It is known for its clean syntax, comprehensive standard library, and active community of developers who contribute to the language's growth and development."
+
+            ]
+        }
+,        {
+            "tag":"name",
+            "patterns": [
+                "What is your name?",
+                "What should I call you?"
+                
+            ],
+            "responses":[
+                "My name is Lara!"
+
+            ]
+        },
+        {
+            "tag":"file",
+            "patterns": [
+                "Create a file",
+                "New file"
+            ],
+            "responses":[
+                "Hey!",
+                "What Can I do for you?",
+                "How can I help you?",
+                "Ready to help"
+
+            ]
+        }
+    ]
+}
