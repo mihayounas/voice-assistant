@@ -1,31 +1,55 @@
+import openai
 import speech_recognition as sr
 import pyttsx3
-import pyaudio
 
-pa = pyaudio.PyAudio()
-device_index = -1
+# Set up the OpenAI API client
+openai.api_key = "<INSERT YOUR API KEY HERE>"
 
-for i in range(pa.get_device_count()):
-    dev = pa.get_device_info_by_index(i)
-    if dev['name'] == 'Your Microphone Name':
-        device_index = dev['index']
-        break
-
-if device_index == -1:
-    print("Microphone not found!")
-else:
-    print(f"Using Microphone: {device_index}")
-
+# Set up the speech recognition engine
 r = sr.Recognizer()
+
+# Set up the text-to-speech engine
 engine = pyttsx3.init()
 
-with sr.Microphone() as source:
-    print("Speak something:")
-    audio = r.listen(source)
+# Define a function to recognize speech
+def recognize_speech():
+    with sr.Microphone() as source:
+        print("Speak now...")
+        audio = r.listen(source)
 
-text = r.recognize_google(audio)
-print(f"You said: {text}")
+    try:
+        text = r.recognize_google(audio)
+        print("You said:", text)
+        return text
+    except sr.UnknownValueError:
+        print("Sorry, I could not understand what you said.")
+        return ""
+    except sr.RequestError:
+        print("Sorry, there was an error while processing your request.")
+        return ""
 
-engine.say(f"You said: {text}")
-engine.runAndWait()
+# Define a function to generate a response using OpenAI
+def generate_response(prompt):
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt=prompt,
+        temperature=0.7,
+        max_tokens=1000,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
 
+    return response.choices[0].text.strip()
+
+# Define a function to speak the response
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+# Main loop
+while True:
+    prompt = recognize_speech()
+    if prompt:
+        response = generate_response(prompt)
+        speak(response)
